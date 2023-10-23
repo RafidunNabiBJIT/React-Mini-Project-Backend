@@ -17,6 +17,20 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @GetMapping("/{bookId}")
+    public ResponseEntity<BookDto> getBookById(@PathVariable Long bookId) {
+        try {
+            // Call the BookService to retrieve book information by ID
+            BookDto bookDto = bookService.getBookById(bookId);
+            return ResponseEntity.ok(bookDto);
+        } catch (BookNotFoundException ex) {
+            // Handle the BookNotFoundException and return a not found response
+            return ResponseEntity.notFound().build();
+        } catch (Exception ex) {
+            // Handle other exceptions and return a server error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     @GetMapping("/all")
     public ResponseEntity<List<BookDto>> getAllBooks() throws NoBookFoundException {
         List<BookDto> books = bookService.getAllBooks();
@@ -56,5 +70,7 @@ public class BookController {
         bookService.returnBook(bookId);
         return ResponseEntity.ok("Book with ID " + bookId + " has been returned.");
     }
+
+
 
 }

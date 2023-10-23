@@ -40,6 +40,12 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BorrowBookRepository borrowBookRepository;
 
+    public BookDto getBookById(Long bookId) throws BookNotFoundException {
+
+        BookEntity bookEntity = bookRepository.findByIdAndIsDeletedFalse(bookId)
+                .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + bookId));
+        return convertToDto(bookEntity);
+    }
     public List<BookDto> getAllBooks() throws NoBookFoundException{
 
         try {

@@ -7,6 +7,8 @@ import com.mini.project.model.BookDto;
 import java.util.List;
 
 public interface BookService {
+
+    public BookDto getBookById(Long bookId) throws BookNotFoundException;
     public List<BookDto> getAllBooks() throws NoBookFoundException;
 
     public BookDto createBook(BookDto book) throws BookAlreadyExistsException;
