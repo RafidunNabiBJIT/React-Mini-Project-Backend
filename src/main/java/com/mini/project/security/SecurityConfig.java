@@ -51,7 +51,8 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.PUT, "/books/{bookId}/reviews/{reviewId}/update").hasRole("CUSTOMER")
                             .requestMatchers(HttpMethod.DELETE, "/books/{bookId}/reviews/{reviewId}/delete").hasRole("CUSTOMER")
                             .requestMatchers(HttpMethod.GET, "/users/{userId}/history").hasRole("CUSTOMER")
-                            .anyRequest().permitAll();
+                            .requestMatchers(HttpMethod.GET, "/books/allPublic").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .addFilter(new CustomAuthenticationFilter(authenticationManager))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)

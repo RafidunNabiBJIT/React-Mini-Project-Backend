@@ -37,6 +37,13 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
+
+    @GetMapping("/allPublic")
+    public ResponseEntity<List<BookDto>> getAllBooksPublic() throws NoBookFoundException {
+        List<BookDto> books = bookService.getAllBooksPublic();
+        return ResponseEntity.ok(books);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<BookDto> createBook(@RequestBody BookDto book) throws BookAlreadyExistsException {
         BookDto createdBook = bookService.createBook(book);
@@ -52,7 +59,7 @@ public class BookController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBook(@PathVariable Long id) throws BookNotFoundException{
         bookService.deleteBook(id);
-        String message = "Book with id " + id + " has been deleted.";
+        String message = "Book has been deleted.";
         return ResponseEntity.ok(message);
     }
 
@@ -61,14 +68,14 @@ public class BookController {
             @PathVariable Long bookId) throws BookNotFoundException, UserNotFoundException, BookNotAvailableException{
 
         bookService.borrowBook(bookId);
-        return ResponseEntity.ok("Book with ID " + bookId + " has been borrowed.");
+        return ResponseEntity.ok("Book has been borrowed.");
     }
 
     @PostMapping("/{bookId}/return")
     public ResponseEntity<String> returnBook(
             @PathVariable Long bookId) throws BookNotFoundException, BookNotBorrowedException, BorrowBookNotFoundException {
         bookService.returnBook(bookId);
-        return ResponseEntity.ok("Book with ID " + bookId + " has been returned.");
+        return ResponseEntity.ok("Book has been returned.");
     }
 
 

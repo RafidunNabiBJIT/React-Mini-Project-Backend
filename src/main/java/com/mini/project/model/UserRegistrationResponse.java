@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRegistrationResponse {
     private String token;
-
-    public UserRegistrationResponse(String token) {
+    private String role;
+    public UserRegistrationResponse(String token, String role) {
         this.token = token;
+        this.role = role;
     }
 
 }

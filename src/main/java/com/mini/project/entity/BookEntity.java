@@ -23,6 +23,7 @@ public class BookEntity {
     private String title;
     private String author;
     private String imgUrl;
+    private String description;
     private boolean isAvailable = true;
     private boolean isDeleted = false;
 }

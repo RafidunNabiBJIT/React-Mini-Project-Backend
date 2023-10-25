@@ -66,6 +66,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("token", AppConstants.TOKEN_PREFIX + accessToken);
+        responseBody.put("role", userDto.getRole());
+        responseBody.put("id", userDto.getId());
 
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonResponse = objectMapper.writeValueAsString(responseBody);

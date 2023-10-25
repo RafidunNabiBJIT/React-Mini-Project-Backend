@@ -16,6 +16,7 @@ public class BorrowDto {
     private Long book_id;
     private String title;
     private String author;
+    private boolean isAvailable;
     private LocalDate borrowDate;
     private LocalDate dueDate;
     private LocalDate returnDate;

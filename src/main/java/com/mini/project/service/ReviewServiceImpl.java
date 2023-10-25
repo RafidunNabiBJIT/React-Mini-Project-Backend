@@ -53,14 +53,16 @@ public class ReviewServiceImpl implements ReviewService{
         }
 
         List<ReviewDto> reviewDtos = reviewEntities.stream()
-                .map(this::convertToDto)
+                .map(reviewEntity -> {
+                    ReviewDto reviewDto = convertToDto(reviewEntity);
+                    reviewDto.setBookId(bookId);
+                    reviewDto.setBookTitle(book.getTitle());
+                    // Set the userId using the associated UserEntity
+                    reviewDto.setUserId(reviewEntity.getUser().getId());
+                    reviewDto.setUserName(reviewEntity.getUser().getFirstName() + " " + reviewEntity.getUser().getLastName());
+                    return reviewDto;
+                })
                 .collect(Collectors.toList());
-
-        reviewDtos.forEach(reviewDto -> {
-            reviewDto.setBookId(bookId);
-            reviewDto.setBookTitle(book.getTitle());
-            reviewDto.setUserId(userId);
-        });
 
         return reviewDtos;
     }
@@ -116,10 +118,13 @@ public class ReviewServiceImpl implements ReviewService{
         existingReview.setComment(updatedReview.getComment());
         existingReview.setRating(updatedReview.getRating());
 
+
+        String userFullName = user.get().getFirstName() + " " + user.get().getLastName();
         ReviewDto responseReviewDto = convertToDto(existingReview);
         responseReviewDto.setBookId(bookId);
         responseReviewDto.setBookTitle(book.getTitle());
         responseReviewDto.setUserId(userId);
+        responseReviewDto.setUserName(userFullName);
 
         return responseReviewDto;
     }

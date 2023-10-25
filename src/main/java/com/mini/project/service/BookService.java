@@ -10,6 +10,7 @@ public interface BookService {
 
     public BookDto getBookById(Long bookId) throws BookNotFoundException;
     public List<BookDto> getAllBooks() throws NoBookFoundException;
+    public List<BookDto> getAllBooksPublic() throws NoBookFoundException;
 
     public BookDto createBook(BookDto book) throws BookAlreadyExistsException;
 

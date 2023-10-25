@@ -1,6 +1,7 @@
 package com.mini.project.controller;
 
 
+import com.mini.project.SpringApplicationContext;
 import com.mini.project.entity.UserEntity;
 import com.mini.project.exception.NoPermissionException;
 import com.mini.project.exception.UserNotFoundException;
@@ -29,7 +30,7 @@ public class UserController {
 
             UserDto createdUser = userService.createUser(userDto);
             String accessToken = JWTUtils.generateToken(createdUser.getEmail());
-            UserRegistrationResponse response = new UserRegistrationResponse(accessToken);
+            UserRegistrationResponse response = new UserRegistrationResponse(accessToken,userDto.getRole());
             return response;
     }
 

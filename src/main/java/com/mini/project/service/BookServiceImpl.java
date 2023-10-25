@@ -46,7 +46,7 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + bookId));
         return convertToDto(bookEntity);
     }
-    public List<BookDto> getAllBooks() throws NoBookFoundException{
+    public List<BookDto> getAllBooks() throws NoBookFoundException {
 
         try {
             return bookRepository.findAll().stream()
@@ -57,12 +57,34 @@ public class BookServiceImpl implements BookService {
                         bookDto.setTitle(bookEntity.getTitle());
                         bookDto.setAuthor(bookEntity.getAuthor());
                         bookDto.setImgUrl(bookEntity.getImgUrl());
+                        bookDto.setDescription(bookEntity.getDescription());
                         return bookDto;
                     })
                     .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new NoBookFoundException("No Book Found.");
         }
+    }
+
+
+        public List<BookDto> getAllBooksPublic() throws NoBookFoundException{
+
+            try {
+                return bookRepository.findAll().stream()
+                        .filter(bookEntity -> !bookEntity.isDeleted()) // Filter out soft-deleted books
+                        .map(bookEntity -> {
+                            BookDto bookDto = new BookDto();
+                            bookDto.setId(bookEntity.getId());
+                            bookDto.setTitle(bookEntity.getTitle());
+                            bookDto.setAuthor(bookEntity.getAuthor());
+                            bookDto.setImgUrl(bookEntity.getImgUrl());
+                            bookDto.setDescription(bookEntity.getDescription());
+                            return bookDto;
+                        })
+                        .collect(Collectors.toList());
+            } catch (Exception ex) {
+                throw new NoBookFoundException("No Book Found.");
+            }
 
     }
 
@@ -72,6 +94,7 @@ public class BookServiceImpl implements BookService {
         bookEntity.setTitle(book.getTitle());
         bookEntity.setAuthor(book.getAuthor());
         bookEntity.setImgUrl(book.getImgUrl());
+        bookEntity.setDescription(book.getDescription());
         BookEntity storedBookDetails =bookRepository.save(bookEntity);
         BookDto returnedValue = modelMapper.map(storedBookDetails,BookDto.class);
         return returnedValue;
@@ -83,6 +106,7 @@ public class BookServiceImpl implements BookService {
         existingBook.setTitle(updatedBook.getTitle());
         existingBook.setAuthor(updatedBook.getAuthor());
         existingBook.setImgUrl(updatedBook.getImgUrl());
+        existingBook.setDescription(updatedBook.getDescription());
 
         BookEntity updatedEntity = bookRepository.save(existingBook);
         BookDto updatedDto = new BookDto();
@@ -157,6 +181,7 @@ public class BookServiceImpl implements BookService {
         bookDto.setTitle(bookEntity.getTitle());
         bookDto.setAuthor(bookEntity.getAuthor());
         bookDto.setImgUrl(bookEntity.getImgUrl());
+        bookDto.setDescription(bookEntity.getDescription());
         return bookDto;
     }
 }

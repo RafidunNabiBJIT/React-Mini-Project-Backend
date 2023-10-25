@@ -30,7 +30,9 @@ public class ReservationEntity {
 
     private LocalDateTime reservationTime;
 
-    private boolean isReserved;
+    @Column(name = "is_reserved", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isReserved = false;
+    @Column(name = "is_cancelled", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isCancelled;
     private String notify;
 }

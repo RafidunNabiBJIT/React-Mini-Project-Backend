@@ -137,6 +137,8 @@ public List<BookDto> getUserBorrowedBooksHistory(Long userId) throws UserNotFoun
                     .id(book.getId())
                     .title(book.getTitle())
                     .author(book.getAuthor())
+                    .imgUrl(book.getImgUrl())
+                    .description(book.getDescription())
                     .build());
         }
         return currentlyBorrowedBooks;
