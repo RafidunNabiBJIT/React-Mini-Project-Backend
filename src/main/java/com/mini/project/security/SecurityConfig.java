@@ -52,7 +52,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.DELETE, "/books/{bookId}/reviews/{reviewId}/delete").hasRole("CUSTOMER")
                             .requestMatchers(HttpMethod.GET, "/users/{userId}/history").hasRole("CUSTOMER")
                             .requestMatchers(HttpMethod.GET, "/books/allPublic").permitAll()
-                            .anyRequest().authenticated();
+                            .anyRequest().permitAll();
                 })
                 .addFilter(new CustomAuthenticationFilter(authenticationManager))
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
